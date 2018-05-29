@@ -82,7 +82,7 @@ def contactEvtHandler(evt) {
 			log.debug "Somebody opened a door... ${evt.device}"
         }
         //turn on the lights
-        turnOnLights
+        turnOnLights()
     }
 	if (evt.value == "closed") {
     	if(debugMode) {
@@ -99,7 +99,7 @@ def motionEvtHandler(evt) {
         	log.debug "Motion in the garage... ${evt.device}"
 		}
 		//turn on the lights
-		turnOnLights
+		turnOnLights()
 	}
 	if (evt.value == "inactive") {
 		if(debugMode) {
