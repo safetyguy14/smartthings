@@ -48,6 +48,9 @@ preferences {
         	input "controlMode_1", "enum", title: "Zone 1: 0 = Time, 1 = Time+Motion, 2 = Time+Door, 3 = Time+Door+Motion", options: [0, 1, 2, 3], required: false
             input "controlMode_2", "enum", title: "Zone 2: 0 = Time, 1 = Time+Motion, 2 = Time+Door, 3 = Time+Door+Motion", options: [0, 1, 2, 3], required: false
         }
+		section("Notifications") {
+			input "sendPushMessage", "enum", title: "Would you like push notifications", metadata: [values: ["Yes", "No"]], required: false
+		}        
         section("want to turn on mega-debugging?") {
             input "debugMode", "bool", title: "Debug Mode?", required: false
         }
@@ -167,8 +170,12 @@ def turnOffLights() {
             }
         }
         else { 
-                it.off()
-                log.info "Turned off the ${it.device} lights"
+            it.off()
+            def msg = "Turned off the ${it.device} lights"
+            log.info msg
+            if (sendPushMessage != "No") {
+            	sendPush(msg)
+            }
         }
     }
 	switches_2.each{
@@ -179,7 +186,11 @@ def turnOffLights() {
         }
         else { 
             it.off()
-            log.info "Turned off the ${it.device} lights"
+            def msg = "Turned off the ${it.device} lights"
+            log.info msg
+            if (sendPushMessage != "No") {
+            	sendPush(msg)
+            }
         }
     }
 }
@@ -193,7 +204,11 @@ def turnOnLights() {
         }
         else {
         	it.on()
-            log.info "Turning on ${it.device} lights"
+            def msg = "Turning on the ${it.device} lights"
+            log.info msg
+            if (sendPushMessage != "No") {
+            	sendPush(msg)
+            }
         }
     }
 	switches_2.each{
@@ -204,7 +219,11 @@ def turnOnLights() {
         }
         else {
         	it.on()
-            log.info "Turning on ${it.device} lights"
+            def msg = "Turning on the ${it.device} lights"
+            log.info msg
+            if (sendPushMessage != "No") {
+            	sendPush(msg)
+            }
         }
     }
 }
